@@ -24,6 +24,7 @@ class Peer:
     peer, addr = self.connection.recvfrom((1<<16)-1)
     ip, port = peer.decode("utf-8").split(" ")
     port = int(port)
+    self.connection.sendto(b"", (ip, port)) # send empty packet to bypass router restriction
     print(f"resolved {peer_id} to {ip}:{port}")
     async def task():
       await self.ainput((ip, port))
